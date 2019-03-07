@@ -1,12 +1,24 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { IssueManagerComponent } from './issue-manager/issue-manager.component';
+import { TutorialComponent } from './tutorial/tutorial.component';
+import { SharedModule } from './shared/shared.module';
+import { IssueTableComponent } from './issue-table/issue-table.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent,
+        IssueManagerComponent,
+        TutorialComponent,
+        IssueTableComponent,
       ],
+      imports: [
+        SharedModule
+      ]
     }).compileComponents();
   }));
 
@@ -14,18 +26,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'github-issue-manager'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('github-issue-manager');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to github-issue-manager!');
   });
 });

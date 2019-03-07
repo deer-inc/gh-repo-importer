@@ -6,7 +6,7 @@ describe('OctkitService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: OctkitService = TestBed.get(OctokitService);
+    const service: OctokitService = TestBed.get(OctokitService);
     expect(service).toBeTruthy();
   });
 });

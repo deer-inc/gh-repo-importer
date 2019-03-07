@@ -8,6 +8,8 @@ import { IssueTableComponent } from './issue-table/issue-table.component';
 import { HeaderComponent } from './header/header.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { IssueManagerComponent } from './issue-manager/issue-manager.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { IssueManagerComponent } from './issue-manager/issue-manager.component';
     IssueManagerComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

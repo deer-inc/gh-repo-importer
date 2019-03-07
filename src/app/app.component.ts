@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { OctokitService } from './octokit.service';
+import { MatDialog } from '@angular/material';
+import { PolicyComponent } from './policy/policy.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,8 @@ export class AppComponent {
 
   constructor(
     private authService: AuthService,
-    private octokitService: OctokitService
+    private octokitService: OctokitService,
+    private dialog: MatDialog
   ) {
     this.authState$.subscribe(status => {
       if (status) {
@@ -22,5 +25,9 @@ export class AppComponent {
         );
       }
     });
+  }
+
+  openPoicy() {
+    this.dialog.open(PolicyComponent);
   }
 }

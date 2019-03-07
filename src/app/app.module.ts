@@ -10,6 +10,7 @@ import { TutorialComponent } from './tutorial/tutorial.component';
 import { IssueManagerComponent } from './issue-manager/issue-manager.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PolicyComponent } from './policy/policy.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,15 @@ import { environment } from '../environments/environment';
     IssueTableComponent,
     HeaderComponent,
     TutorialComponent,
-    IssueManagerComponent
+    IssueManagerComponent,
+    PolicyComponent
   ],
   imports: [
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PolicyComponent]
 })
 export class AppModule {}

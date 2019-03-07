@@ -1,0 +1,18 @@
+.avatars {
+  display: inline-flex;
+  vertical-align: middle;
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background: center/cover;
+  display: block;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 2px solid white;
+  & + & {
+    margin-right: -16px;
+  }
+}

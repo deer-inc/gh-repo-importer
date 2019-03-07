@@ -1,0 +1,108 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>リポジトリオーナー</mat-label>
+    <input
+      matInput
+      formControlName="owner"
+      type="text"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>リポジト名</mat-label>
+    <input
+      matInput
+      formControlName="repo"
+      type="text"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>マイルストーン</mat-label>
+    <input
+      matInput
+      formControlName="milestone"
+      type="text"
+      autocomplete="off"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>ステータス</mat-label>
+    <mat-select formControlName="state">
+      <mat-option
+        [value]="state"
+        *ngFor="let state of ['open', 'closed', 'all']"
+      >
+        {{ state }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>アサイン</mat-label>
+    <input matInput formControlName="assignee" type="text" autocomplete="off" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>作成者</mat-label>
+    <input matInput formControlName="creator" type="text" autocomplete="off" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>メンション</mat-label>
+    <input
+      matInput
+      formControlName="mentioned"
+      type="text"
+      autocomplete="off"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>ラベル</mat-label>
+    <input matInput formControlName="labels" type="text" autocomplete="off" />
+    <mat-hint>,（コンマ）区切りで指定</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>ソート</mat-label>
+    <mat-select formControlName="sort">
+      <mat-option
+        [value]="sort"
+        *ngFor="let sort of ['created', 'updated', 'comments']"
+      >
+        {{ sort }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>順序</mat-label>
+    <mat-select formControlName="direction">
+      <mat-option [value]="direction" *ngFor="let direction of ['asc', 'desc']">
+        {{ direction }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>最終更新日</mat-label>
+    <input matInput formControlName="since" type="date" autocomplete="off" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>取得数</mat-label>
+    <input
+      matInput
+      formControlName="per_page"
+      type="number"
+      autocomplete="off"
+      max="100"
+    />
+    <mat-hint>最大100件</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>ページ</mat-label>
+    <input matInput formControlName="page" type="number" autocomplete="off" />
+  </mat-form-field>
+
+  <button [disabled]="form.invalid" (click)="getIssues()" mat-raised-button>
+    Issue取得
+  </button>
+</form>
+
+<app-issue-table *ngIf="issues" [issues]="issues"></app-issue-table>

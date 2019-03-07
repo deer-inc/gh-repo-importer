@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+  GitHub Issue Manager
+  <span class="spacer"></span>
+  <a
+    href="https://github.com/deer-inc/GitHub-Issue-Manager"
+    mat-button
+    target="_blank"
+    class="github"
+  >
+    <img src="/assets/github.svg" alt="" />
+    GitHub
+  </a>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button (click)="clearCache()" mat-menu-item>
+      <mat-icon>delete_sweep</mat-icon>
+      <span>キャッシュクリア</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

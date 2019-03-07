@@ -1,0 +1,20 @@
+.tutorial {
+  display: flex;
+  margin: 24px 0;
+  &__image {
+    margin-left: 16px;
+    width: 500px;
+    margin: 0;
+    img {
+      width: 100%;
+    }
+  }
+  &__body {
+    flex: 1;
+    font-size: 14px;
+  }
+}
+
+.token-field {
+  width: 40em;
+}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Octokit from '@octokit/rest';
+import * as CryptoJS from 'crypto-js';
 
 export interface IssueFilter {
   milestone: string;
@@ -18,16 +19,28 @@ export interface IssueFilter {
 @Injectable({
   providedIn: 'root'
 })
-export class OctkitService {
+export class OctokitService {
   octokit: Octokit;
+  lastParamas: object;
+  lastToken: string;
 
-  constructor() {}
+  constructor() {
+    this.getStorageData();
+  }
 
-  saveStorage(key: string, params: object) {
+  getStorageData() {
+    this.lastParamas = this.getDataFromStorage('issueParams');
+
+    if (this.lastToken) {
+      this.initOctokit(this.lastToken);
+    }
+  }
+
+  setDataToStorage(key: string, params: object) {
     localStorage[key] = JSON.stringify(params);
   }
 
-  loadStorage(key: string): object {
+  getDataFromStorage(key: string): object {
     if (localStorage[key]) {
       return JSON.parse(localStorage[key]);
     } else {
@@ -36,14 +49,17 @@ export class OctkitService {
   }
 
   initOctokit(token: string): void {
-    localStorage.token = token;
     this.octokit = new Octokit({
       auth: `token ${token}`
     });
   }
 
+  clearCache() {
+    localStorage.issueParams = null;
+  }
+
   getIssues(params: Octokit.IssuesListForRepoParams): Promise<Octokit.Response<Octokit.IssuesListForRepoResponse>> {
-    this.saveStorage('issueParams', params);
+    this.setDataToStorage('issueParams', params);
 
     if (params.since) {
       params.since = new Date(params.since).toISOString();

@@ -36,9 +36,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IssueTableComponent } from './issue-table/issue-table.component';
+import { HeaderComponent } from './header/header.component';
+import { TutorialComponent } from './tutorial/tutorial.component';
+import { IssueManagerComponent } from './issue-manager/issue-manager.component';
 
 @NgModule({
-  declarations: [AppComponent, IssueTableComponent],
+  declarations: [AppComponent, IssueTableComponent, HeaderComponent, TutorialComponent, IssueManagerComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

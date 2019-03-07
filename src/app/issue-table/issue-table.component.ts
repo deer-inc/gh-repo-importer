@@ -14,7 +14,6 @@ interface TableIssues extends IssuesListForRepoResponseItem {
 export class IssueTableComponent implements OnInit {
   @Input()
   set issues(issues) {
-    console.log('set');
     this.dataSource.data = issues.map(issue => {
       const cost = issue.title.match(/- (\d(?:\d+|\d?\.\d)?)H/);
       return {

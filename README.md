@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.com/deer-inc/GitHub-Issue-Manager.svg?branch=master)](https://travis-ci.com/deer-inc/GitHub-Issue-Manager)
+![MIT License](https://img.shields.io/github/license/deer-inc/github-issue-manager.svg)
 
-# GitHubIssueManager
+# GitHub Issue Manager
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
 

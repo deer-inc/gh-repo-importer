@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { IssuesListForRepoResponseItem } from '@octokit/rest';
 
-interface TableIssues extends IssuesListForRepoResponseItem {
+interface TableIssues {
   cost: number;
+  title: string;
 }
 
 @Component({

@@ -1,6 +1,46 @@
 import { Injectable } from '@angular/core';
-import * as Octokit from '@octokit/rest';
-import * as CryptoJS from 'crypto-js';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { HttpLink } from 'apollo-angular-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Observable } from 'rxjs';
+import { ISSUE_LIST } from './query';
+import { ApolloQueryResult } from 'apollo-client';
+
+export interface Issue {
+  title: string;
+  state: 'OPEN' | 'CLOSED';
+  assignees: {
+    nodes: {
+      name: string;
+    }[]
+  };
+  labels: {
+    nodes: {
+      name: string;
+    }[]
+  };
+}
+
+export interface Response {
+  rateLimit: {
+    resetAt: string;
+    cost: number;
+    nodeCount: number;
+    remaining: number;
+    limit: number;
+  };
+  repository: {
+    issues: {
+      pageInfo: {
+        hasNextPage: boolean;
+        endCursor: string;
+      };
+      nodes: Issue[];
+    }
+  };
+}
 
 export interface IssueFilter {
   milestone: string;
@@ -20,11 +60,13 @@ export interface IssueFilter {
   providedIn: 'root'
 })
 export class OctokitService {
-  octokit: Octokit;
   lastParamas: object;
   lastToken: string;
 
-  constructor() {
+  constructor(
+    private apollo: Apollo,
+    private httpLink: HttpLink
+  ) {
     this.getStorageData();
   }
 
@@ -49,8 +91,21 @@ export class OctokitService {
   }
 
   initOctokit(token: string): void {
-    this.octokit = new Octokit({
-      auth: `token ${token}`
+    const http = this.httpLink.create({
+      uri: 'https://api.github.com/graphql',
+    });
+
+    const auth = setContext((_, { headers }) => {
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+    });
+
+    this.apollo.create({
+      link: auth.concat(http),
+      cache: new InMemoryCache(),
     });
   }
 
@@ -58,13 +113,17 @@ export class OctokitService {
     localStorage.issueParams = null;
   }
 
-  getIssues(params: Octokit.IssuesListForRepoParams): Promise<Octokit.Response<Octokit.IssuesListForRepoResponse>> {
+  getIssues(params): Observable<ApolloQueryResult<Response>> {
     this.setDataToStorage('issueParams', params);
-
-    if (params.since) {
-      params.since = new Date(params.since).toISOString();
-    }
-
-    return this.octokit.issues.listForRepo(params);
+    return this.apollo.watchQuery<Response>({
+      query: ISSUE_LIST,
+      variables: {
+        owner: params.owner,
+        name: params.name,
+        first: params.first,
+        states: params.states,
+        after: null
+      }
+    }).valueChanges;
   }
 }

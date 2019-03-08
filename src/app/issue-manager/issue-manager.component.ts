@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IssuesListForRepoResponseItem, Response, IssuesListForRepoParams, IssuesListForRepoResponse } from '@octokit/rest';
-import { OctokitService } from '../octokit.service';
+import { OctokitService, Issue } from '../octokit.service';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -11,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class IssueManagerComponent implements OnInit {
 
-  issues: IssuesListForRepoResponseItem[];
+  issues: Issue[];
   form: FormGroup;
 
   constructor(
@@ -21,9 +20,9 @@ export class IssueManagerComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       owner: ['', Validators.required],
-      repo: ['', Validators.required],
+      name: ['', Validators.required],
       milestone: [null],
-      state: ['open'],
+      states: [null],
       assignee: [null],
       creator: [null],
       mentioned: [null],
@@ -31,7 +30,7 @@ export class IssueManagerComponent implements OnInit {
       sort: ['created'],
       direction: ['desc'],
       since: [null],
-      per_page: [100, Validators.max(100)],
+      first: [100, Validators.max(100)],
       page: [1]
     });
 
@@ -43,42 +42,13 @@ export class IssueManagerComponent implements OnInit {
   ngOnInit() {
   }
 
-  private buildParams(base) {
-    const params = {
-      owner: '',
-      repo: ''
-    };
-
-    Object.keys(base).forEach(key => {
-      if (base[key]) {
-        params[key] = base[key];
-      }
-    });
-
-    return params;
-  }
-
   getIssues() {
-    const params: IssuesListForRepoParams = this.buildParams(this.form.value);
-
-    this.octokitService
-      .getIssues(params)
-      .then((result: Response<IssuesListForRepoResponse>) => {
-        this.issues = result.data;
-        this.snackBar.open('Issueを取得しました', null, {
-          duration: 2000
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        this.snackBar.open(
-          '取得に失敗しました。トークンをご確認ください',
-          null,
-          {
-            duration: 2000
-          }
-        );
+    this.octokitService.getIssues(this.form.value).subscribe(result => {
+      this.issues = result.data.repository.issues.nodes;
+      this.snackBar.open('Issueを取得しました', null, {
+        duration: 2000
       });
+    });
   }
 
 }

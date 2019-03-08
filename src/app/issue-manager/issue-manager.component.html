@@ -13,7 +13,7 @@
     <mat-label>リポジト名</mat-label>
     <input
       matInput
-      formControlName="repo"
+      formControlName="name"
       type="text"
       autocomplete="off"
       required
@@ -30,10 +30,10 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>ステータス</mat-label>
-    <mat-select formControlName="state">
+    <mat-select formControlName="states">
       <mat-option
         [value]="state"
-        *ngFor="let state of ['open', 'closed', 'all']"
+        *ngFor="let state of [null, 'OPEN', 'CLOSED']"
       >
         {{ state }}
       </mat-option>
@@ -88,7 +88,7 @@
     <mat-label>取得数</mat-label>
     <input
       matInput
-      formControlName="per_page"
+      formControlName="first"
       type="number"
       autocomplete="off"
       max="100"

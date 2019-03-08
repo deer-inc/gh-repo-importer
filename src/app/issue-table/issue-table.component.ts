@@ -17,7 +17,7 @@ export class IssueTableComponent implements OnInit {
     this.dataSource.data = issues.map(issue => {
       const cost = issue.title.match(/- (\d(?:\d+|\d?\.\d)?)H/);
       return {
-        cost: cost ? parseInt(cost[1], 10) : 0,
+        cost: cost ? +cost[1] : 0,
         ...issue
       };
     });

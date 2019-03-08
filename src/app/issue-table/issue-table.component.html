@@ -4,11 +4,13 @@
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
         <td mat-cell *matCellDef="let element">{{ element.number }}</td>
+        <td mat-footer-cell *matFooterCellDef>合計</td>
       </ng-container>
 
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>タイトル</th>
         <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="assignee">
@@ -18,20 +20,24 @@
             <span [style.background-image]="'url(https://github.com/' + assignee.login + '.png)'" [matTooltip]="assignee.login" class="avatar" *ngFor="let assignee of element.assignees"></span>
           </div>
         </td>
+        <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="state">
         <th mat-header-cell *matHeaderCellDef>ステータス</th>
         <td mat-cell *matCellDef="let element">{{ element.state }}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <ng-container matColumnDef="cost">
         <th mat-header-cell *matHeaderCellDef>工数</th>
-        <td mat-cell *matCellDef="let element">{{ element.cost }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.cost | number }}</td>
+        <td mat-footer-cell *matFooterCellDef>{{ getTotalCost() | number }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>
 
     <mat-paginator [pageSize]="100" [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>

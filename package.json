@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod --base-href \"https://deer-inc.github.io/GitHub-Issue-Manager/\" && gh-pages -d dist/github-issue-manager"
+    "deploy": "ng build --prod --base-href \"/GitHub-Issue-Manager/\" && gh-pages -d dist/github-issue-manager"
   },
   "private": true,
   "dependencies": {

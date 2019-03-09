@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { OctokitService } from '../octokit.service';
+import { GitHubService } from '../github.service';
 import { AuthService } from '../auth.service';
 import { MatSnackBar } from '@angular/material';
 
@@ -17,7 +17,7 @@ export class TutorialComponent implements OnInit {
   ]);
 
   constructor(
-    private octokitService: OctokitService,
+    private githubService: GitHubService,
     private authService: AuthService,
     private snackBar: MatSnackBar
   ) {}
@@ -26,15 +26,16 @@ export class TutorialComponent implements OnInit {
 
   checkToken(token: string) {
     if (this.tokenField.valid) {
-      this.authService.checkAuth(token)
-        .then(result => {
-          this.octokitService.initOctokit(result);
-        })
-        .catch(result => {
+      this.githubService.setToken(token).subscribe(
+        result => {
+          this.authService.login(token);
+        },
+        error => {
           this.snackBar.open('認証に失敗しました', null, {
             duration: 2000
           });
-        });
+        }
+      );
     }
   }
 }

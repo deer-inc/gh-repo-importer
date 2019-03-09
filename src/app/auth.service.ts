@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import * as Octokit from '@octokit/rest';
 import * as CryptoJS from 'crypto-js';
 
@@ -11,28 +11,16 @@ export class AuthService {
   authState$: Observable<boolean> = this.authSource.asObservable();
   token: string = this.getTokenFromLocalStorage();
 
-  constructor() {
-    if (this.token) {
-      this.checkAuth(this.token);
-    }
+  constructor() { }
+
+  checkAuth(): string {
+    this.authSource.next(!!this.token);
+    return this.token;
   }
 
-  checkAuth(token: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      new Octokit({
-        auth: `token ${token}`
-      }).issues.list({
-        per_page: 1
-      }).then((result) => {
-        this.authSource.next(true);
-        this.setTokenToLocalStorage(token);
-        this.token = token;
-        resolve(token);
-      }).catch((err) => {
-        this.authSource.next(false);
-        reject();
-      });
-    });
+  login(token: string) {
+    this.setTokenToLocalStorage(token);
+    this.authSource.next(true);
   }
 
   setTokenToLocalStorage(token: string): void {

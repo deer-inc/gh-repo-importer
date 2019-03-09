@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OctokitService } from '../octokit.service';
+import { GitHubService } from '../github.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private octkitService: OctokitService,
+    private githubService: GitHubService,
     private authService: AuthService
   ) { }
 
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   }
 
   clearCache() {
-    this.octkitService.clearCache();
+    this.githubService.clearCache();
     this.authService.clearCache();
   }
 

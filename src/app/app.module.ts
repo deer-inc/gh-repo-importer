@@ -13,6 +13,8 @@ import { environment } from '../environments/environment';
 import { PolicyComponent } from './policy/policy.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FilterFormComponent } from './filter-form/filter-form.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     TutorialComponent,
     IssueManagerComponent,
-    PolicyComponent
+    PolicyComponent,
+    FilterFormComponent,
+    SummaryComponent
   ],
   imports: [
     SharedModule,

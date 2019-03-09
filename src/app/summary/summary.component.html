@@ -1,0 +1,9 @@
+<mat-card *ngIf="summary">
+  <mat-list dense *ngFor="let item of summary | keyvalue">
+    <mat-list-item>
+      <img matListAvatar [src]="'https://github.com/' + item.key + '.png'"  alt="">
+      <span matLine>{{item.key}}</span>
+      <span matLine>{{item.value.totalCost}}H</span>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

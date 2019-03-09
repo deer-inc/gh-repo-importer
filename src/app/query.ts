@@ -9,17 +9,23 @@ export const ISSUE_LIST = gql`query($owner:String!, $name:String!, $first:Int, $
     limit
   }
 	repository(owner:$owner, name:$name) {
+    assignableUsers(first:100) {
+      nodes {
+        login
+      }
+    }
     issues(first:$first, states:$states, after:$after) {
       pageInfo {
         hasNextPage
         endCursor
       }
       nodes {
+        number
         title
         state
         assignees(first:100) {
           nodes {
-            name
+            login
           }
         }
         labels(first:100) {
@@ -29,5 +35,16 @@ export const ISSUE_LIST = gql`query($owner:String!, $name:String!, $first:Int, $
         }
       }
     }
+  }
+}`;
+
+
+export const LIMIT = gql`query {
+  rateLimit {
+    resetAt
+    cost
+    nodeCount
+    remaining
+    limit
   }
 }`;

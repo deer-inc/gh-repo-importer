@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { OctokitService } from './octokit.service';
+import { GitHubService } from './github.service';
 import { MatDialog } from '@angular/material';
 import { PolicyComponent } from './policy/policy.component';
 
@@ -15,16 +15,14 @@ export class AppComponent {
 
   constructor(
     private authService: AuthService,
-    private octokitService: OctokitService,
+    private githubService: GitHubService,
     private dialog: MatDialog
   ) {
-    this.authState$.subscribe(status => {
-      if (status) {
-        this.octokitService.initOctokit(
-          this.authService.token
-        );
-      }
-    });
+    const token = this.authService.checkAuth();
+
+    if (token) {
+      this.githubService.setToken(token);
+    }
   }
 
   openPoicy() {

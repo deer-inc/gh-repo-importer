@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 import { HttpLink } from 'apollo-angular-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Observable } from 'rxjs';
-import { ISSUE_LIST } from './query';
+import { ISSUE_LIST, LIMIT } from './query';
 import { ApolloQueryResult } from 'apollo-client';
+import { concat } from 'apollo-link';
 
 export interface Issue {
+  number: number;
   title: string;
+  url: string;
   state: 'OPEN' | 'CLOSED';
   assignees: {
     nodes: {
-      name: string;
+      login: string;
     }[]
   };
   labels: {
@@ -21,6 +23,10 @@ export interface Issue {
       name: string;
     }[]
   };
+}
+
+export interface AssignableUser {
+  login: string;
 }
 
 export interface Response {
@@ -32,6 +38,11 @@ export interface Response {
     limit: number;
   };
   repository: {
+    assignableUsers: {
+      nodes: {
+        login: string;
+      }[]
+    };
     issues: {
       pageInfo: {
         hasNextPage: boolean;
@@ -59,23 +70,40 @@ export interface IssueFilter {
 @Injectable({
   providedIn: 'root'
 })
-export class OctokitService {
+export class GitHubService {
   lastParamas: object;
   lastToken: string;
+  token: string;
+
+  authMiddleware = setContext(() => {
+    return {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    };
+  });
 
   constructor(
     private apollo: Apollo,
     private httpLink: HttpLink
   ) {
     this.getStorageData();
+    this.createAppollo();
+  }
+
+  createAppollo() {
+    const http = this.httpLink.create({
+      uri: 'https://api.github.com/graphql',
+    });
+
+    this.apollo.create({
+      link: concat(this.authMiddleware, http),
+      cache: new InMemoryCache(),
+    });
   }
 
   getStorageData() {
     this.lastParamas = this.getDataFromStorage('issueParams');
-
-    if (this.lastToken) {
-      this.initOctokit(this.lastToken);
-    }
   }
 
   setDataToStorage(key: string, params: object) {
@@ -90,23 +118,11 @@ export class OctokitService {
     }
   }
 
-  initOctokit(token: string): void {
-    const http = this.httpLink.create({
-      uri: 'https://api.github.com/graphql',
-    });
-
-    const auth = setContext((_, { headers }) => {
-      return {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
-    });
-
-    this.apollo.create({
-      link: auth.concat(http),
-      cache: new InMemoryCache(),
-    });
+  setToken(token: string): Observable<any> {
+    this.token = token;
+    return this.apollo.watchQuery({
+      query: LIMIT
+    }).valueChanges;
   }
 
   clearCache() {

@@ -1,45 +1,46 @@
-<div class="tutorial">
+<mat-card class="tutorial">
   <div class="tutorial__body">
     <h2>アクセストークンを入力してください。</h2>
-    <ul>
-      <li>
-        アクセストークンはDBやクッキーに保存されないのでご安心ください。
-      </li>
+    <ul class="list">
       <li>
         アクセストークンがない人は<a
           href="https://github.com/settings/tokens/new"
           target="_blank"
           >作成</a
         >してください。
-        <ul>
-          <li>
-            作成時に<b>repo</b>のみにチェックしてください
-          </li>
-        </ul>
+      </li>
+      <li>
+        作成時に<b>repo</b>のみにチェックしてください
       </li>
     </ul>
+    <mat-form-field class="token-field" floatLabel="always">
+      <mat-label>アクセストークン</mat-label>
+      <input
+        type="text"
+        autofocus
+        required
+        placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        maxlength="40"
+        minlength="40"
+        autocomplete="off"
+        [formControl]="tokenField"
+        matInput
+      />
+      <mat-error *ngIf="tokenField.invalid"
+        >正しいトークンをペースしてください。</mat-error
+      >
+    </mat-form-field>
+
+    <button
+      [disabled]="tokenField.invalid"
+      mat-raised-button
+      color="primary"
+      (click)="checkToken(tokenField.value)"
+    >
+      認証
+    </button>
   </div>
   <figure class="tutorial__image">
     <img src="./assets/api-setting.png" alt="" />
   </figure>
-</div>
-
-<mat-form-field class="token-field" floatLabel="always">
-  <mat-label>アクセストークン</mat-label>
-  <input
-    type="text"
-    autofocus
-    required
-    placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    maxlength="40"
-    minlength="40"
-    autocomplete="off"
-    [formControl]="tokenField"
-    matInput
-  />
-  <mat-error *ngIf="tokenField.invalid"
-    >正しいトークンをペースしてください。</mat-error
-  >
-</mat-form-field>
-
-<button [disabled]="tokenField.invalid" mat-raised-button (click)="checkToken(tokenField.value)">認証</button>
+</mat-card>

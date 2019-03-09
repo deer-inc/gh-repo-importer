@@ -1,11 +1,12 @@
 <mat-card>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="nope">
     <mat-form-field floatLabel="always">
       <mat-label>リポジトリオーナー</mat-label>
       <input
         matInput
         formControlName="owner"
         type="text"
+        name="owner"
         autocomplete="nope"
         required
       />
@@ -16,6 +17,7 @@
         matInput
         formControlName="name"
         type="text"
+        name="name"
         autocomplete="nope"
         required
       />
@@ -26,6 +28,7 @@
         matInput
         formControlName="milestone"
         type="text"
+        name="milestone"
         autocomplete="nope"
       />
     </mat-form-field>
@@ -45,6 +48,7 @@
       <input
         matInput
         formControlName="assignee"
+        name="assignee"
         type="text"
         autocomplete="nope"
       />
@@ -54,6 +58,7 @@
       <input
         matInput
         formControlName="creator"
+        name="creator"
         type="text"
         autocomplete="nope"
       />
@@ -63,6 +68,7 @@
       <input
         matInput
         formControlName="mentioned"
+        name="mentioned"
         type="text"
         autocomplete="nope"
       />
@@ -72,6 +78,7 @@
       <input
         matInput
         formControlName="labels"
+        name="labels"
         type="text"
         autocomplete="nope"
       />
@@ -93,6 +100,7 @@
       <input
         matInput
         formControlName="first"
+        name="first"
         type="number"
         autocomplete="nope"
         max="100"
@@ -119,6 +127,7 @@
       <input
         matInput
         formControlName="page"
+        name="page"
         type="number"
         autocomplete="nope"
       />

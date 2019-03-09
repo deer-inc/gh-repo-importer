@@ -1,6 +1,8 @@
 .tutorial {
   display: flex;
-  margin: 24px 0;
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 48px;
   &__image {
     margin-left: 16px;
     width: 500px;
@@ -16,5 +18,14 @@
 }
 
 .token-field {
-  width: 40em;
+  width: 22em;
+  margin-right: 16px;
+}
+
+.list {
+  line-height: 1.8;
+  margin-bottom: 24px;
+  li {
+    margin-bottom: 8px;
+  }
 }

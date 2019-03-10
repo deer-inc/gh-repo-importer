@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GitHubService } from '../github.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-filter-form',
@@ -16,6 +17,7 @@ export class FilterFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private gitHubService: GitHubService,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       owner: ['deer-inc', Validators.required],
@@ -36,6 +38,13 @@ export class FilterFormComponent implements OnInit {
     if (this.gitHubService.lastParamas) {
       this.form.patchValue(this.gitHubService.lastParamas);
     }
+
+    this.route.queryParams.subscribe(params => {
+      this.form.patchValue(params);
+      if (params.owner && params.name) {
+        this.onSubmit();
+      }
+    });
   }
 
   ngOnInit() {

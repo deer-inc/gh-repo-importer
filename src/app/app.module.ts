@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 import { SummaryComponent } from './summary/summary.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { UserGuideComponent } from './user-guide/user-guide.component';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { UserGuideComponent } from './user-guide/user-guide.component';
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],

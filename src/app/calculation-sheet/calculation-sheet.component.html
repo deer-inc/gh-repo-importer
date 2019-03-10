@@ -1,0 +1,10 @@
+<p>{{userName}}さんの総稼働時間は{{totalCost}}時間です。請求金額は以下の通りです。</p>
+<p>{{(unitPrice.value | number) || '?'}}円 x {{totalCost/8}}人日 = {{unitPrice.value ? (unitPrice.value * totalCost/8 | number) : '?'}}円（税別）</p>
+
+<mat-form-field>
+  <mat-label>単価(1人日)</mat-label>
+  <input type="number" placeholder="30000" #unitPrice matInput step="1000">
+  <mat-hint>1人日=8時間稼働</mat-hint>
+</mat-form-field>
+
+<button ngxClipboard [cbContent]="unitPrice.value" (click)="closeSheet()" mat-raised-button color="primary" [disabled]="!unitPrice.value">コピー</button>

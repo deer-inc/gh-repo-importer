@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Issue, AssignableUser } from '../github.service';
+import { MatBottomSheet, MatSnackBar } from '@angular/material';
+import { CalculationSheetComponent } from '../calculation-sheet/calculation-sheet.component';
 
-interface Summary {
+export interface Summary {
   login: string;
   totalCost: number;
 }
@@ -17,10 +19,24 @@ export class SummaryComponent implements OnInit {
 
   userSummaries: Summary[];
 
-  constructor() {}
+  constructor(
+    private bottomSheet: MatBottomSheet,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.buildSummary();
+  }
+
+  openCalculationSheet(data: Summary) {
+    this.bottomSheet.open(CalculationSheetComponent, {data})
+      .afterDismissed().subscribe(result => {
+        if (result) {
+          this.snackBar.open('請求金額をコピーしました', null, {
+            duration: 2000
+          });
+        }
+      });
   }
 
   getTotalCost(user) {

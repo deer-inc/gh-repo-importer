@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterFormComponent } from './filter-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { GitHubService } from '../github.service';
+import { RouterModule } from '@angular/router';
 
 describe('FilterFormComponent', () => {
   let component: FilterFormComponent;
@@ -20,7 +21,8 @@ describe('FilterFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ FilterFormComponent ],
       imports: [
-        SharedModule
+        SharedModule,
+        RouterModule.forRoot([])
       ],
       providers: [
         {provide: GitHubService, useValue: gitHubServiceStub}

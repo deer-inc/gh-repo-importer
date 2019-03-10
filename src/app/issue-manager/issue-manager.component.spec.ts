@@ -7,6 +7,7 @@ import { FilterFormComponent } from '../filter-form/filter-form.component';
 import { UserGuideComponent } from '../user-guide/user-guide.component';
 import { SummaryComponent } from '../summary/summary.component';
 import { GitHubService } from '../github.service';
+import { RouterModule } from '@angular/router';
 
 describe('IssueManagerComponent', () => {
   let component: IssueManagerComponent;
@@ -22,7 +23,8 @@ describe('IssueManagerComponent', () => {
         SummaryComponent,
       ],
       imports: [
-        SharedModule
+        SharedModule,
+        RouterModule.forRoot([])
       ],
       providers: [
         {provide: GitHubService, useValue: {}}

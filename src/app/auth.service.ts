@@ -35,9 +35,4 @@ export class AuthService {
       return null;
     }
   }
-
-  clearCache() {
-    localStorage.issueParams = null;
-    localStorage.token = null;
-  }
 }

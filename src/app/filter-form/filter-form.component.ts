@@ -18,8 +18,8 @@ export class FilterFormComponent implements OnInit {
     private gitHubService: GitHubService,
   ) {
     this.form = this.fb.group({
-      owner: ['', Validators.required],
-      name: ['', Validators.required],
+      owner: ['deer-inc', Validators.required],
+      name: ['github-manager-example-repository', Validators.required],
       milestone: [null],
       states: [null],
       assignee: [null],

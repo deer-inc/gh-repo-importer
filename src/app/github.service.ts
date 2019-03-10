@@ -125,10 +125,6 @@ export class GitHubService {
     }).valueChanges;
   }
 
-  clearCache() {
-    localStorage.issueParams = null;
-  }
-
   getIssues(params): Observable<ApolloQueryResult<Response>> {
     this.setDataToStorage('issueParams', params);
     return this.apollo.watchQuery<Response>({

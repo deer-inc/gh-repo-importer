@@ -1,5 +1,6 @@
 <div class="layout">
 <app-filter-form (submitData)="getIssues($event)"></app-filter-form>
 <app-issue-table *ngIf="issues" [issues]="issues"></app-issue-table>
+<app-user-guide *ngIf="!issues"></app-user-guide>
 <app-summary *ngIf="issues" [users]="assignableUsers" [issues]="issues"></app-summary>
 </div>

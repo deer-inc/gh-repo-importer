@@ -9,17 +9,13 @@ import { AuthService } from '../auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
-    private githubService: GitHubService,
-    private authService: AuthService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   clearCache() {
-    this.githubService.clearCache();
-    this.authService.clearCache();
+    localStorage.clear();
   }
 
 }

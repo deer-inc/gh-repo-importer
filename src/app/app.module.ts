@@ -15,6 +15,7 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FilterFormComponent } from './filter-form/filter-form.component';
 import { SummaryComponent } from './summary/summary.component';
+import { UserGuideComponent } from './user-guide/user-guide.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SummaryComponent } from './summary/summary.component';
     IssueManagerComponent,
     PolicyComponent,
     FilterFormComponent,
-    SummaryComponent
+    SummaryComponent,
+    UserGuideComponent
   ],
   imports: [
     SharedModule,

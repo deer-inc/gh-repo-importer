@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Issue, AssignableUser } from '../github.service';
 import { MatBottomSheet, MatSnackBar } from '@angular/material';
 import { CalculationSheetComponent } from '../calculation-sheet/calculation-sheet.component';
@@ -13,7 +13,7 @@ export interface Summary {
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss']
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, OnChanges {
   @Input() issues: Issue[];
   @Input() users: AssignableUser[];
 
@@ -24,7 +24,9 @@ export class SummaryComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnChanges() {
     this.buildSummary();
   }
 

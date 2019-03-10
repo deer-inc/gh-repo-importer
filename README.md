@@ -17,7 +17,7 @@ GIM(GitHub Issue Manager)はGitHubのIssueで工数計算を行うためのツ�
 ### Note
 
 - Issue取得後に表示される画面右のコントリビューターをクリックすると金額計算ができます。
-- パラメーターをつけたURLを共有すると直ちに取得結果を表示できます。
+- パラメーターをつけたURLを共有すると直ちに取得結果を表示できます。（[Example](https://deer-inc.github.io/gim/?owner=deer-inc&name=github-manager-example-repository))
 
 ## コントリビュート
 

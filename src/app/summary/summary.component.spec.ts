@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SummaryComponent } from './summary.component';
+import { SharedModule } from '../shared/shared.module';
 
 describe('SummaryComponent', () => {
   let component: SummaryComponent;
@@ -8,7 +9,10 @@ describe('SummaryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SummaryComponent ]
+      declarations: [ SummaryComponent ],
+      imports: [
+        SharedModule
+      ]
     })
     .compileComponents();
   }));
@@ -16,6 +20,8 @@ describe('SummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SummaryComponent);
     component = fixture.componentInstance;
+    component.users = [];
+    component.issues = [];
     fixture.detectChanges();
   });
 

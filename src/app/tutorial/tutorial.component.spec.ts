@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TutorialComponent } from './tutorial.component';
 import { SharedModule } from '../shared/shared.module';
+import { GitHubService } from '../github.service';
 
 describe('TutorialComponent', () => {
   let component: TutorialComponent;
@@ -12,6 +13,9 @@ describe('TutorialComponent', () => {
       declarations: [ TutorialComponent ],
       imports: [
         SharedModule
+      ],
+      providers: [
+        {provide: GitHubService, useValue: {}}
       ]
     })
     .compileComponents();

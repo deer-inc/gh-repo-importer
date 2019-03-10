@@ -15,9 +15,7 @@ export class CalculationSheetComponent implements OnInit {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<CalculationSheetComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: Summary
-  ) {
-    console.log(this.data);
-  }
+  ) { }
 
   ngOnInit() { }
 

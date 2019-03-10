@@ -2,9 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Issue, AssignableUser } from '../github.service';
 
 interface Summary {
-  [propName: string]: {
-    totalCost: number;
-  };
+  login: string;
+  totalCost: number;
 }
 
 @Component({
@@ -16,7 +15,7 @@ export class SummaryComponent implements OnInit {
   @Input() issues: Issue[];
   @Input() users: AssignableUser[];
 
-  summary: Summary = {};
+  userSummaries: Summary[];
 
   constructor() {}
 
@@ -32,19 +31,30 @@ export class SummaryComponent implements OnInit {
         });
       })
       .map(issue => {
-        const cost = issue.title.match(/- (\d(?:\d+|\d?\.\d)?)H/)
+        const cost = issue.title.match(/- (\d(?:\d+|\d?\.\d)?)H/);
         return cost ? +cost[1] : 0;
       })
       .reduce((acc, value) => acc + value, 0);
   }
 
   buildSummary() {
-    this.users.forEach(user => {
-      this.summary[user.login] = {
-        totalCost: this.getTotalCost(user)
+    this.userSummaries = this.users.map(user => {
+      return {
+        totalCost: this.getTotalCost(user),
+        login: user.login
       };
     });
 
-    console.log(this.summary);
+    const compare = (a, b) => {
+      if (a.totalCost > b.totalCost) {
+        return -1;
+      } else if (a.totalCost < b.totalCost) {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+
+    this.userSummaries = this.userSummaries.sort(compare);
   }
 }

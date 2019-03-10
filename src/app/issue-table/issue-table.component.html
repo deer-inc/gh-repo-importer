@@ -1,6 +1,6 @@
 <mat-card>
   <div>
-    <mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.number }}</mat-cell>
@@ -16,7 +16,7 @@
       </ng-container>
 
       <ng-container matColumnDef="assignees">
-        <mat-header-cell *matHeaderCellDef>アサイン</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>アサイン</mat-header-cell>
         <mat-cell *matCellDef="let element">
           <div class="avatars">
             <span [style.background-image]="'url(https://github.com/' + assignee + '.png)'" [matTooltip]="assignee" class="avatar" *ngFor="let assignee of element.assignees"></span>
@@ -25,16 +25,16 @@
         <mat-footer-cell *matFooterCellDef></mat-footer-cell>
       </ng-container>
 
-      <ng-container matColumnDef="state">
-        <mat-header-cell *matHeaderCellDef>ステータス</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.state }}</mat-cell>
-        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      <ng-container matColumnDef="cost">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>工数</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.cost | number }}H</mat-cell>
+        <mat-footer-cell *matFooterCellDef>{{ getTotalCost() | number }}H</mat-footer-cell>
       </ng-container>
 
-      <ng-container matColumnDef="cost">
-        <mat-header-cell *matHeaderCellDef>工数</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.cost | number }}</mat-cell>
-        <mat-footer-cell *matFooterCellDef>{{ getTotalCost() | number }}</mat-footer-cell>
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef mat-sort-header><mat-icon>error_outline</mat-icon></mat-header-cell>
+        <mat-cell *matCellDef="let element"><mat-icon class="status" [class.status-closed]="element.state === 'CLOSED'" [matTooltip]="element.state">{{ element.state === 'OPEN' ? 'error_outline' : 'block' }}</mat-icon></mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

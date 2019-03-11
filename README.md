@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/deer-inc/GitHub-Issue-Manager.svg?branch=master)](https://travis-ci.com/deer-inc/GitHub-Issue-Manager)
+[![Build Status](https://travis-ci.com/deer-inc/gim.svg?branch=master)](https://travis-ci.com/deer-inc/gim)
 ![MIT License](https://img.shields.io/github/license/deer-inc/github-issue-manager.svg)
 
 # GIM

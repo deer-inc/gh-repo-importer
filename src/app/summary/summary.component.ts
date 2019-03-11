@@ -31,7 +31,10 @@ export class SummaryComponent implements OnInit, OnChanges {
   }
 
   openCalculationSheet(data: Summary) {
-    this.bottomSheet.open(CalculationSheetComponent, {data})
+    this.bottomSheet.open(CalculationSheetComponent, {
+      data,
+      autoFocus: true
+    })
       .afterDismissed().subscribe(result => {
         if (result) {
           this.snackBar.open('請求金額をコピーしました', null, {

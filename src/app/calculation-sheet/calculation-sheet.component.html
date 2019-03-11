@@ -1,5 +1,5 @@
 <p>{{userName}}さんの総稼働時間は{{totalCost}}時間です。請求金額は以下の通りです。</p>
-<p>{{(unitPrice.value | number) || '?'}}円 x {{totalCost/8}}人日 = {{unitPrice.value ? (unitPrice.value * totalCost/8 | number) : '?'}}円（税別）</p>
+<p>{{(unitPrice.value) || '?'}}円 x {{totalCost/8  | number:'1.0-1'}}人日 = {{unitPrice.value ? (unitPrice.value * (totalCost/8 | number:'1.0-1') | number:'1.0-0') : '?'}}円（税別）</p>
 
 <mat-form-field>
   <mat-label>単価(1人日)</mat-label>

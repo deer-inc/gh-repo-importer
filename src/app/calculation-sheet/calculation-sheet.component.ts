@@ -5,7 +5,7 @@ import { Summary } from '../summary/summary.component';
 @Component({
   selector: 'app-calculation-sheet',
   templateUrl: './calculation-sheet.component.html',
-  styleUrls: ['./calculation-sheet.component.scss']
+  styleUrls: ['./calculation-sheet.component.scss'],
 })
 export class CalculationSheetComponent implements OnInit {
 

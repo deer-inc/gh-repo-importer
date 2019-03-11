@@ -134,7 +134,7 @@ export class GitHubService {
         name: params.name,
         first: params.first,
         states: params.states,
-        after: null
+        after: params.after
       }
     }).valueChanges;
   }

@@ -21,13 +21,26 @@ export class IssueManagerComponent implements OnInit {
   }
 
   getIssues(value) {
+    this.issues = [];
+    this.fetchIssues(value);
+  }
+
+  fetchIssues(value) {
     this.gitHubService.getIssues(value).subscribe(
       result => {
-        this.issues = result.data.repository.issues.nodes;
+        console.log(result.data.rateLimit);
+        this.issues = this.issues.concat(result.data.repository.issues.nodes);
         this.assignableUsers = result.data.repository.assignableUsers.nodes;
-        this.snackBar.open('Issueを取得しました', null, {
-          duration: 2000
-        });
+
+        if (result.data.repository.issues.pageInfo.hasNextPage) {
+          const setting = Object.assign({}, value);
+          setting.after = result.data.repository.issues.pageInfo.endCursor;
+          this.fetchIssues(setting);
+        } else {
+          this.snackBar.open('Issueを取得しました', null, {
+            duration: 2000
+          });
+        }
       },
       error => {
         console.error(error);

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import * as Octokit from '@octokit/rest';
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({

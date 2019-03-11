@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GitHubService, Issue, AssignableUser } from '../github.service';
 import { MatSnackBar } from '@angular/material';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-issue-manager',
@@ -26,9 +27,8 @@ export class IssueManagerComponent implements OnInit {
   }
 
   fetchIssues(value) {
-    this.gitHubService.getIssues(value).subscribe(
-      result => {
-        console.log(result.data.rateLimit);
+    this.gitHubService.getIssues(value).pipe(first()).toPromise()
+      .then(result => {
         this.issues = this.issues.concat(result.data.repository.issues.nodes);
         this.assignableUsers = result.data.repository.assignableUsers.nodes;
 
@@ -41,8 +41,8 @@ export class IssueManagerComponent implements OnInit {
             duration: 2000
           });
         }
-      },
-      error => {
+      })
+      .catch(error => {
         console.error(error);
         let msg = '';
 
@@ -56,8 +56,7 @@ export class IssueManagerComponent implements OnInit {
         this.snackBar.open(msg, null, {
           duration: 2000
         });
-      }
-    );
+      });
   }
 
 }

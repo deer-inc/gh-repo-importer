@@ -23,6 +23,7 @@ export const ISSUE_LIST = gql`query($owner:String!, $name:String!, $first:Int, $
         number
         title
         state
+        url
         assignees(first:100) {
           nodes {
             login

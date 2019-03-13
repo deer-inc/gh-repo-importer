@@ -12,6 +12,7 @@ export class IssueManagerComponent implements OnInit {
 
   issues: Issue[];
   assignableUsers: AssignableUser[];
+  isLoading: boolean;
 
   constructor(
     private gitHubService: GitHubService,
@@ -24,6 +25,7 @@ export class IssueManagerComponent implements OnInit {
   getIssues(value) {
     this.issues = [];
     this.fetchIssues(value);
+    this.isLoading = true;
   }
 
   fetchIssues(value) {
@@ -37,6 +39,7 @@ export class IssueManagerComponent implements OnInit {
           setting.after = result.data.repository.issues.pageInfo.endCursor;
           this.fetchIssues(setting);
         } else {
+          this.isLoading = false;
           this.snackBar.open('Issueを取得しました', null, {
             duration: 2000
           });

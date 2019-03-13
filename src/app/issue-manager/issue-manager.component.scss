@@ -8,3 +8,9 @@ mat-form-field {
   grid-auto-flow: row;
   grid-template-columns: 250px 1fr 250px;
 }
+
+.loading {
+  width: 40px;
+  height: 40px;
+  margin: 24px auto;
+}

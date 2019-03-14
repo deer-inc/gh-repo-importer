@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/deer-inc/gim.svg?branch=master)](https://travis-ci.com/deer-inc/gim)
+[![Coverage Status](https://coveralls.io/repos/github/deer-inc/gim/badge.svg?branch=master)](https://coveralls.io/github/deer-inc/gim?branch=master)
 ![MIT License](https://img.shields.io/github/license/deer-inc/github-issue-manager.svg)
 
 # GIM

@@ -21,7 +21,7 @@ export class IssueManagerComponent implements OnInit {
 
   ngOnInit() {
     if (this.gitHubService.lastParamas) {
-      this.getIssues(this.gitHubService.lastParamas)
+      this.getIssues(this.gitHubService.lastParamas);
     }
   }
 

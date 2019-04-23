@@ -1,9 +1,0 @@
-<mat-card *ngIf="userSummaries">
-  <mat-list dense *ngFor="let summary of userSummaries">
-    <mat-list-item (click)="openCalculationSheet(summary)">
-      <img matListAvatar [src]="'https://github.com/' + summary.login + '.png'"  alt="">
-      <span matLine>{{summary.login}}</span>
-      <span matLine>{{summary.totalCost}}H</span>
-    </mat-list-item>
-  </mat-list>
-</mat-card>

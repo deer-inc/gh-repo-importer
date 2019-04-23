@@ -5,9 +5,7 @@ import { IssueManagerComponent } from './issue-manager/issue-manager.component';
 import { TutorialComponent } from './tutorial/tutorial.component';
 import { SharedModule } from './shared/shared.module';
 import { FilterFormComponent } from './filter-form/filter-form.component';
-import { IssueTableComponent } from './issue-table/issue-table.component';
 import { UserGuideComponent } from './user-guide/user-guide.component';
-import { SummaryComponent } from './summary/summary.component';
 import { GitHubService } from './github.service';
 
 describe('AppComponent', () => {
@@ -19,9 +17,7 @@ describe('AppComponent', () => {
         IssueManagerComponent,
         TutorialComponent,
         FilterFormComponent,
-        IssueTableComponent,
         UserGuideComponent,
-        SummaryComponent
       ],
       imports: [
         SharedModule

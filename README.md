@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/deer-inc/gh-repo-importer/badge.svg?branch=master)](https://coveralls.io/github/deer-inc/gh-repo-importer?branch=master)
 ![MIT License](https://img.shields.io/github/license/deer-inc/gh-repo-importer.svg)
 
-# GIM
+# Gh-repo-importer
 
 gh-repo-importerはGitHubをIssue、ラベルごと完全にインポートするためのツールです。
 

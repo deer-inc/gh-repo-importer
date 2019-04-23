@@ -1,0 +1,72 @@
+{
+  "configVersion": 1,
+  "timestamp": 1555989074440,
+  "index": "/gh-repo-importer/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/gh-repo-importer/es2015-polyfills.4a4cfea0ce682043f4e9.js",
+        "/gh-repo-importer/favicon.ico",
+        "/gh-repo-importer/index.html",
+        "/gh-repo-importer/main.e5eb27981f59783965d7.js",
+        "/gh-repo-importer/polyfills.407a467dedb63cfdd103.js",
+        "/gh-repo-importer/runtime.a5dd35324ddfd942bef1.js",
+        "/gh-repo-importer/styles.23297b7e60bd4370f7a8.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/gh-repo-importer/assets/api-setting.png",
+        "/gh-repo-importer/assets/cover.png",
+        "/gh-repo-importer/assets/github.svg",
+        "/gh-repo-importer/assets/icons/icon-144x144.png",
+        "/gh-repo-importer/assets/icons/icon-192x192.png",
+        "/gh-repo-importer/assets/icons/icon-512x512.png",
+        "/gh-repo-importer/assets/issue-example.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/gh-repo-importer/assets/api-setting.png": "3c8a052927b5c6814ea4b9dfbbe643e4a7c0d084",
+    "/gh-repo-importer/assets/cover.png": "1c74407432f99ddceed27d3546c80d7d7f3e96db",
+    "/gh-repo-importer/assets/github.svg": "d72a8270e65f1b4a65f46e5c48d8fb37ee1304f5",
+    "/gh-repo-importer/assets/icons/icon-144x144.png": "aa9b24c8b8450384b078a2a0923aeae5a9f2cd83",
+    "/gh-repo-importer/assets/icons/icon-192x192.png": "8e2b2fb5c0bc8f4edbc6a84bceb05bacdd3a09d5",
+    "/gh-repo-importer/assets/icons/icon-512x512.png": "65dcb8b2133e55575ee88b9bdedf005218b4433d",
+    "/gh-repo-importer/assets/issue-example.png": "daa7dbb15e2d9894498b25075b14e3177696b19c",
+    "/gh-repo-importer/es2015-polyfills.4a4cfea0ce682043f4e9.js": "b7a81c61d32b0b12737f0c13f45973ba391cd7f9",
+    "/gh-repo-importer/favicon.ico": "66b232b76f21c925b832f7628132450ebef6292d",
+    "/gh-repo-importer/index.html": "ac2b0f8d511935d381d03bf407e5dc291557ed70",
+    "/gh-repo-importer/main.e5eb27981f59783965d7.js": "21ae50d2f4b221be92e3a4e72a8b134260c0ca91",
+    "/gh-repo-importer/polyfills.407a467dedb63cfdd103.js": "ffa449995bf2eba2ccd0a002417214f7eb75e7b5",
+    "/gh-repo-importer/runtime.a5dd35324ddfd942bef1.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
+    "/gh-repo-importer/styles.23297b7e60bd4370f7a8.css": "bde454b2e0abcb2b89e72072d080bdff0933aab6"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

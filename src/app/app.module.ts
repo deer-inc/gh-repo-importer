@@ -33,7 +33,6 @@ import { UserGuideComponent } from './user-guide/user-guide.component';
   imports: [
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    GraphQLModule,
     HttpClientModule,
     RouterModule.forRoot([]),
   ],

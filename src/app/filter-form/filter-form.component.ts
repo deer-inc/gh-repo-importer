@@ -16,32 +16,16 @@ export class FilterFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private gitHubService: GitHubService,
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      owner: ['deer-inc', Validators.required],
-      name: ['github-manager-example-repository', Validators.required],
-      milestone: [null],
-      states: [null],
-      assignee: [null],
-      creator: [null],
-      mentioned: [null],
-      labels: [null],
-      sort: ['created'],
-      direction: ['desc'],
-      since: [null],
-      first: [100, Validators.max(100)],
-      page: [1]
+      url: ['', Validators.required],
+      owner: ['', Validators.required],
     });
-
-    if (this.gitHubService.lastParamas) {
-      this.form.patchValue(this.gitHubService.lastParamas);
-    }
 
     this.route.queryParams.subscribe(params => {
       this.form.patchValue(params);
-      if (params.owner && params.name) {
+      if (params.from) {
         this.onSubmit();
       }
     });

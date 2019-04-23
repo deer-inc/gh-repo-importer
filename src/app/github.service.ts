@@ -1,71 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
-import { setContext } from 'apollo-link-context';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Observable } from 'rxjs';
-import { ISSUE_LIST, LIMIT } from './query';
-import { ApolloQueryResult } from 'apollo-client';
-import { concat } from 'apollo-link';
-
-export interface Issue {
-  number: number;
-  title: string;
-  url: string;
-  state: 'OPEN' | 'CLOSED';
-  assignees: {
-    nodes: {
-      login: string;
-    }[]
-  };
-  labels: {
-    nodes: {
-      name: string;
-    }[]
-  };
-}
-
-export interface AssignableUser {
-  login: string;
-}
-
-export interface Response {
-  rateLimit: {
-    resetAt: string;
-    cost: number;
-    nodeCount: number;
-    remaining: number;
-    limit: number;
-  };
-  repository: {
-    assignableUsers: {
-      nodes: {
-        login: string;
-      }[]
-    };
-    issues: {
-      pageInfo: {
-        hasNextPage: boolean;
-        endCursor: string;
-      };
-      nodes: Issue[];
-    }
-  };
-}
-
-export interface IssueFilter {
-  milestone: string;
-  state: string;
-  assignee: string;
-  creator: string;
-  mentioned: string;
-  labels: string;
-  sort: string;
-  direction: string;
-  since: string;
-  per_page: number;
-  page: number;
-}
+import { first } from 'rxjs/operators';
+import * as Octokit from '@octokit/rest';
 
 @Injectable({
   providedIn: 'root'
@@ -74,68 +10,123 @@ export class GitHubService {
   lastParamas: object;
   lastToken: string;
   token: string;
-
-  authMiddleware = setContext(() => {
-    return {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    };
-  });
+  issues = [];
 
   constructor(
-    private apollo: Apollo,
-    private httpLink: HttpLink
-  ) {
-    this.getStorageData();
-    this.createAppollo();
+  ) { }
+
+  setToken(token: string) {
+    this.token = token;
   }
 
-  createAppollo() {
-    const http = this.httpLink.create({
-      uri: 'https://api.github.com/graphql',
+  private parseURL(url: string): {
+    owner: string;
+    repo: string;
+  } {
+    let result = url.replace('https://github.com/', '');
+    result = result.replace(/\/$/, '');
+    const values = result.split('/');
+    return {
+      owner: values[0],
+      repo: values[1]
+    };
+  }
+
+  private async clearLabels(octokit, owner, repo) {
+    const oldLabels = await octokit.issues.listLabelsForRepo({
+      owner,
+      repo
     });
 
-    this.apollo.create({
-      link: concat(this.authMiddleware, http),
-      cache: new InMemoryCache(),
-    });
-  }
-
-  getStorageData() {
-    this.lastParamas = this.getDataFromStorage('issueParams');
-  }
-
-  setDataToStorage(key: string, params: object) {
-    localStorage[key] = JSON.stringify(params);
-  }
-
-  getDataFromStorage(key: string): object {
-    if (localStorage[key]) {
-      return JSON.parse(localStorage[key]);
-    } else {
-      return null;
+    for (const label of oldLabels.data) {
+      await octokit.issues.deleteLabel({
+        owner,
+        repo,
+        name: label.name
+      });
     }
   }
 
-  setToken(token: string): Observable<any> {
-    this.token = token;
-    return this.apollo.watchQuery({
-      query: LIMIT
-    }).valueChanges;
+  private async createLabels(octokit, owner, base) {
+    const labels = await octokit.issues.listLabelsForRepo({
+      owner: base.owner,
+      repo: base.repo
+    });
+
+    for (const label of labels.data) {
+      await octokit.issues.createLabel({
+        owner,
+        repo: base.repo,
+        name: label.name,
+        color: label.color
+      });
+    }
   }
 
-  getIssues(params): Observable<ApolloQueryResult<Response>> {
-    this.setDataToStorage('issueParams', params);
-    return this.apollo.watchQuery<Response>({
-      query: ISSUE_LIST,
-      variables: {
-        owner: params.owner,
-        name: params.name,
-        first: params.first,
-        states: params.states,
-        after: params.after
+  private async createIssues(octokit, owner, repo) {
+    const issues = await octokit.paginate('GET /repos/:owner/:repo/issues',
+      {
+        owner: 'octokit',
+        repo: 'rest.js'
+      }, response => response.data.filter(issue => !issue.pull_request)
+    );
+
+    for (const issue of issues) {
+      await octokit.issues.create({
+        owner,
+        repo,
+        title: issue.title,
+        body: issue.body,
+        assignee: owner,
+        labels: issue.labels.map(label => label.name),
+      });
+    }
+  }
+
+  private async forkRepo(octokit, owner, base) {
+    await octokit.repos.createFork({
+      owner: base.owner,
+      repo: base.repo
+    });
+
+    await octokit.repos.update({
+      owner,
+      repo: base.repo,
+      name: base.repo,
+      has_issues: true,
+      has_projects: false,
+      has_wiki: false,
+    });
+  }
+
+  async importRepo(url: string, owner: string): Promise<string> {
+    const base = this.parseURL(url);
+    const octokit = new Octokit({
+      auth: `token ${this.token}`
+    });
+
+    await this.forkRepo(octokit, owner, base);
+    await this.clearLabels(octokit, owner, base.repo);
+    await this.createLabels(octokit, owner, base);
+    await this.createIssues(octokit, owner, base.repo);
+
+    return `https://github.com/${owner}/${base.repo}/`;
+  }
+
+  async checkToken(token: string) {
+    try {
+      const octokit = new Octokit({
+        auth: `token ${token}`
+      });
+      const user =  await octokit.users.getAuthenticated();
+
+      if (user.headers['x-oauth-scopes'].match('repo')) {
+        return token;
+      } else {
+        throw new Error('APIの権限でリポジトリを許可してください');
       }
-    }).valueChanges;
+    } catch (error) {
+      throw error;
+    }
   }
 }

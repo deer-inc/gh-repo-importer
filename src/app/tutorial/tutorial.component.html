@@ -26,8 +26,9 @@
         [formControl]="tokenField"
         matInput
       />
-      <mat-error *ngIf="tokenField.invalid"
-        >正しいトークンをペースしてください。</mat-error
+      <mat-error *ngIf="tokenField.invalid">
+        {{tokenField.errors?.tokenError || 'トークンが不正です'}}
+      </mat-error
       >
     </mat-form-field>
 

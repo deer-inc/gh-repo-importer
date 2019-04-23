@@ -1,7 +1,6 @@
 <div class="layout">
-<app-filter-form (submitData)="getIssues($event)"></app-filter-form>
-<app-issue-table *ngIf="issues && issues.length; else loading" [issues]="issues"></app-issue-table>
-<ng-template #loading><div class="loading" *ngIf="isLoading"><mat-spinner [diameter]="40"></mat-spinner></div></ng-template>
-<app-user-guide *ngIf="!issues"></app-user-guide>
-<app-summary *ngIf="issues && issues.length" [users]="assignableUsers" [issues]="issues"></app-summary>
+<app-filter-form (submitData)="cloneRepo($event)"></app-filter-form>
+<p *ngIf="newURL">{{ newURL }}</p>
+<div class="loading" *ngIf="isLoading"><mat-spinner [diameter]="40"></mat-spinner></div>
+<app-user-guide *ngIf="!isLoading"></app-user-guide>
 </div>

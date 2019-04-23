@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { GitHubService } from '../github.service';
 import { AuthService } from '../auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -14,6 +14,8 @@ export class TutorialComponent implements OnInit {
     Validators.required,
     Validators.maxLength(40),
     Validators.minLength(40)
+  ], [
+    this.tokenValidator()
   ]);
 
   constructor(
@@ -22,20 +24,25 @@ export class TutorialComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   checkToken(token: string) {
     if (this.tokenField.valid) {
-      this.githubService.setToken(token).subscribe(
-        result => {
-          this.authService.login(token);
-        },
-        error => {
-          this.snackBar.open('認証に失敗しました', null, {
-            duration: 2000
-          });
-        }
-      );
+      this.githubService.setToken(token);
+      this.authService.login(token);
     }
+  }
+
+  tokenValidator(): AsyncValidatorFn {
+    return async (control: AbstractControl): Promise<ValidationErrors | null> => {
+      try {
+        await this.githubService.checkToken(control.value);
+        return null;
+      } catch (e) {
+        return {
+          tokenError: e.message
+        };
+      }
+    };
   }
 }

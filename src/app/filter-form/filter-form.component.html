@@ -1,118 +1,28 @@
 <mat-card>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="nope">
     <mat-form-field floatLabel="always">
-      <mat-label>リポジトリオーナー</mat-label>
+      <mat-label>複製したいリポジトリURL</mat-label>
+      <input
+        matInput
+        formControlName="url"
+        type="url"
+        name="url"
+        autocomplete="none"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>複製先のオーナー名</mat-label>
       <input
         matInput
         formControlName="owner"
         type="text"
         name="owner"
-        autocomplete="nope"
-        required
+        autocomplete="none"
       />
     </mat-form-field>
-    <mat-form-field floatLabel="always">
-      <mat-label>リポジトリ名</mat-label>
-      <input
-        matInput
-        formControlName="name"
-        type="text"
-        name="name"
-        autocomplete="nope"
-        required
-      />
-    </mat-form-field>
-    <!-- <mat-form-field floatLabel="always">
-      <mat-label>マイルストーン</mat-label>
-      <input
-        matInput
-        formControlName="milestone"
-        type="text"
-        name="milestone"
-        autocomplete="nope"
-      />
-    </mat-form-field> -->
-    <mat-form-field floatLabel="always">
-      <mat-label>ステータス</mat-label>
-      <mat-select formControlName="states">
-        <mat-option
-          [value]="state"
-          *ngFor="let state of [null, 'OPEN', 'CLOSED']"
-        >
-          {{ state }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <!-- <mat-form-field floatLabel="always">
-      <mat-label>アサイン</mat-label>
-      <input
-        matInput
-        formControlName="assignee"
-        name="assignee"
-        type="text"
-        autocomplete="nope"
-      />
-    </mat-form-field> -->
-    <!-- <mat-form-field floatLabel="always">
-      <mat-label>作成者</mat-label>
-      <input
-        matInput
-        formControlName="creator"
-        name="creator"
-        type="text"
-        autocomplete="nope"
-      />
-    </mat-form-field> -->
-    <!-- <mat-form-field floatLabel="always">
-      <mat-label>メンション</mat-label>
-      <input
-        matInput
-        formControlName="mentioned"
-        name="mentioned"
-        type="text"
-        autocomplete="nope"
-      />
-    </mat-form-field>
-    <mat-form-field floatLabel="always">
-      <mat-label>ラベル</mat-label>
-      <input
-        matInput
-        formControlName="labels"
-        name="labels"
-        type="text"
-        autocomplete="nope"
-      />
-      <mat-hint>,（コンマ）区切りで指定</mat-hint>
-    </mat-form-field> -->
-    <!-- <mat-form-field floatLabel="always">
-      <mat-label>取得数</mat-label>
-      <input
-        matInput
-        formControlName="first"
-        name="first"
-        type="number"
-        autocomplete="nope"
-        max="100"
-      />
-      <mat-hint>最大100件</mat-hint>
-    </mat-form-field> -->
-    <!-- <mat-form-field floatLabel="always">
-      <mat-label>最終更新日</mat-label>
-      <input matInput formControlName="since" type="date" autocomplete="nope" />
-    </mat-form-field>
-    <mat-form-field floatLabel="always">
-      <mat-label>ページ</mat-label>
-      <input
-        matInput
-        formControlName="page"
-        name="page"
-        type="number"
-        autocomplete="nope"
-      />
-    </mat-form-field> -->
-
     <button color="primary" [disabled]="form.invalid" mat-raised-button>
-      Issue取得
+      複製
     </button>
   </form>
 </mat-card>

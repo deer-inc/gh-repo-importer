@@ -26,11 +26,11 @@ script:
 
 after_success:
   - npm run gh-build
-  - cat ./coverage/github-issue-manager/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./coverage/gh-repo-importer/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 deploy:
   provider: pages
-  local-dir: ./dist/github-issue-manager
+  local-dir: ./dist/gh-repo-importer
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   keep-history: true
